@@ -13,10 +13,10 @@ installed on your computer and then execute
 
 1. Make sure you delete `node_modules`, `.parcel-cache`, `dist`
 2. `docker run --interactive --tty --volume %cd%:/app --workdir /app node:16-alpine npm install` (shorthand `docker run -it -v %cd%:/app -w /app node:16-alpine npm install`)
-3`docker run --interactive --tty --volume %cd%:/app --workdir /app --port 1234:1234 node:16-alpine npm run dev` (shorthand `docker run -it -v %cd%:/app -w /app -po 1234:1234 node:16-alpine npm run dev`)
+3. `docker run --interactive --tty --volume %cd%:/app --workdir /app --port 1234:1234 node:16-alpine npm run dev` (shorthand `docker run -it -v %cd%:/app -w /app -po 1234:1234 node:16-alpine npm run dev`)
 
 ## Running in Docker on Linux/Mac
 
 1. Make sure you delete `node_modules`, `.parcel-cache`, `dist`
 2. `docker run --interactive --tty --volume $(pwd):/app --workdir /app node:16-alpine npm install` (shorthand `docker run -it -v  $(pwd):/app -w /app node:16-alpine npm install`)
-3`docker run --interactive --tty --volume $(pwd):/app --workdir /app --port 1234:1234 node:16-alpine npm run dev` (shorthand `docker run -it -v  $(pwd):/app -w /app -p 1234:1234 node:16-alpine npm run dev`)
+3. `docker run --interactive --tty --volume $(pwd):/app --workdir /app --port 1234:1234 node:16-alpine npm run dev` (shorthand `docker run -it -v  $(pwd):/app -w /app -p 1234:1234 node:16-alpine npm run dev`)
