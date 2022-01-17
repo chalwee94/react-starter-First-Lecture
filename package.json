@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "parcel index.html"
   },
+  "type": "module",
   "devDependencies": {
     "parcel": "^2.2.0"
   },
@@ -12,6 +13,6 @@
   },
   "engines": {
     "node": "16.13.x",
-    "npm": "8.3.x"
+    "npm": ">= 8.1.x"
   }
 }
