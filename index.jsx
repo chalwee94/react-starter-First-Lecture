@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom";
 import {Routes, Route, Link, BrowserRouter} from "react-router-dom";
 
 
-const movies = [
+const Movies = [
     {
         title: "De urørlige",
         plot: " De urørlige er en oppløftende komedie om vennskap, tillit og menneskelige muligheter, og er den sanne historien om to menn som aldri skulle ha møtt hverandre.",
@@ -25,16 +25,17 @@ function FrontPage() {
         </ul>
     </div>;
 }
-
-
-function NewListMovies() {
+function ListMovies({movies}) {
     return <div>
-        <h1>List movies</h1>
-        {movies.map(m =>
+        <h1>List Movies</h1>
+        {Movies.map(m =>
             <>
+            <div key={m.title}>
                 <h2>{m.title} ({m.year})</h2>
                 <div>{m.plot}</div>
+            </div>
             </>
+
         )}
     </div>;
 }
@@ -44,13 +45,11 @@ function Application() {
         <Routes>
             <Route path="/" element={<FrontPage/>}/>
             <Route path="/movies/new" element={<h1>New movie</h1>}/>
-            <Route path="/movies" element={<h1><NewListMovies/></h1>}/>
+            <Route path="/movies" element={<ListMovies/>}/>
+            <Route path="/movies" element={<ListMovies movies={Movies}/>}/>
         </Routes>
     </BrowserRouter>;
 }
-
-
-
 
 ReactDOM.render(
     <Application/>,
