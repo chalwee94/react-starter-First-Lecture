@@ -1,7 +1,8 @@
 import * as React from "react";
 import {useState} from "react";
+import {useState, useEffect} from "react";
 import * as ReactDOM from "react-dom";
-import {Routes, Route, Link, BrowserRouter} from "react-router-dom";
+import {Routes, Route, Link, BrowserRouter, useNavigate} from "react-router-dom";
 
 const MOVIES = [
     {
@@ -25,28 +26,36 @@ function FrontPage() {
         </ul>
     </div>;
 }
-function ListMovies({movies}) {
-    return <div>
-        <h1>List movies</h1>
-        {movies.map(m =>
-            <div key={m.title}>
-                <h2>{m.title} ({m.year})</h2>
-                <div>{m.plot}</div>
-            </div>
-        )}
-    </div>;
+function ListMovies({moviesApi}) {
+    const [movies, setMovies] = useState();
+    useEffect(async () => {
+        console.log("hello");
+        setMovies(undefined);
+        setMovies(await moviesApi.listMovies());
+    }, []);
+
+    if (!movies) {
+        return  <div>Loading...</div>
+    }
 }
-
-
-function Newmovie() {
+function Newmovie({moviesApi}) {
     const [title, setTitle] = useState("");
     const [year, setYear] = useState("");
     const [plot, setPlot] = useState("");
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        MOVIES.push({title, year, plot});
-}
+    const navigate = useNavigate();
+
+
+
+        async function handleSubmit(e) {
+            e.preventDefault();
+            onAddmovie({title, year, plot});
+            await moviesApi.onAddMovie({title, year, plot});
+            navigate("/");
+        }
+
+
+
     return <form onSubmit={handleSubmit}>
         <h1>New movie</h1>
         <div>
@@ -66,11 +75,18 @@ function Newmovie() {
 }
 
 function Application() {
+    const moviesApi = {
+        onAddMovie: async (m) =>  MOVIES.push(m),
+        listMovies: async () => MOVIES
+    }
+
     return <BrowserRouter>
         <Routes>
             <Route path="/" element={<FrontPage/>}/>
-            <Route path="/movies/new" element={<Newmovie/>}/>
+            <Route path="/movies/new" element={<Newmovie onAddMovie={m => MOVIES.push(m)}/>}/>
             <Route path="/movies" element={<ListMovies movies={MOVIES}/>}/>
+            <Route path="/movies/new" element={<Newmovie moviesApi={moviesApi}/>}/>
+            <Route path="/movies" element={<ListMovies moviesApi={moviesApi}/>}/>
         </Routes>
     </BrowserRouter>;
 }
